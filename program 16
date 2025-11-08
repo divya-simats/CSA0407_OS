@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <string.h>
+
+struct {
+    char dname[10], fname[10][10];
+    int fcount;
+} dir[10];
+
+int main() {
+    int nd = 0, ch;
+    char d[10], f[10];
+    do {
+        printf("\n1.Create Dir  2.Create File  3.Display  4.Exit\n");
+        scanf("%d", &ch);
+        switch (ch) {
+        case 1:
+            printf("Enter dir name: ");
+            scanf("%s", dir[nd].dname);
+            dir[nd].fcount = 0;
+            nd++;
+            break;
+        case 2:
+            printf("Enter dir name: ");
+            scanf("%s", d);
+            for (int i = 0; i < nd; i++)
+                if (strcmp(d, dir[i].dname) == 0) {
+                    printf("Enter file name: ");
+                    scanf("%s", dir[i].fname[dir[i].fcount++]);
+                }
+            break;
+        case 3:
+            for (int i = 0; i < nd; i++) {
+                printf("\nDir %s:", dir[i].dname);
+                for (int j = 0; j < dir[i].fcount; j++)
+                    printf(" %s", dir[i].fname[j]);
+            }
+            break;
+        }
+    } while (ch != 4);
+    return 0;
+}
