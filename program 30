@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <pthread.h>
+#include <unistd.h>
+
+void* run(void* arg){
+    printf("Thread started, id=%lu\n", pthread_self());
+    sleep(1);
+    pthread_exit((void*)42);
+}
+
+int main(){
+    pthread_t t;
+    pthread_create(&t, NULL, run, NULL);
+
+    // join
+    void* ret;
+    pthread_join(t, &ret);
+    printf("Joined thread, return value=%ld\n", (long)ret);
+
+    // create another to show pthread_equal and exit
+    pthread_t t1, t2;
+    pthread_create(&t1,NULL,run,NULL);
+    pthread_create(&t2,NULL,run,NULL);
+    printf("t1==t2? %d\n", pthread_equal(t1,t2));
+    pthread_join(t1,NULL); pthread_join(t2,NULL);
+    printf("Main exiting\n");
+    return 0;
+}
