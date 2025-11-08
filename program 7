@@ -1,0 +1,21 @@
+#include <stdio.h>
+int main(){
+    int n, qt; printf("n & quantum: "); scanf("%d %d",&n,&qt);
+    int bt[n], rt[n];
+    for(int i=0;i<n;i++){ printf("BT P%d: ",i+1); scanf("%d",&bt[i]); rt[i]=bt[i]; }
+    int t=0, done=0; int wt[n], tat[n];
+    for(int i=0;i<n;i++) wt[i]=0;
+    while(done<n){
+        int progress=0;
+        for(int i=0;i<n;i++){
+            if(rt[i]>0){
+                progress=1;
+                if(rt[i]>qt){ t+=qt; rt[i]-=qt; }
+                else{ t+=rt[i]; rt[i]=0; done++; tat[i]=t; wt[i]=tat[i]-bt[i]; }
+            }
+        }
+        if(!progress) break;
+    }
+    puts("PID BT WT TAT");
+    for(int i=0;i<n;i++) printf("P%d %d %d %d\n",i+1,bt[i],wt[i],tat[i]);
+}
