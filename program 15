@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+
+struct {
+    char fname[10];
+} dir[10];
+
+int main() {
+    int n = 0, ch;
+    char f[10];
+    do {
+        printf("\n1.Create File  2.Delete File  3.Search File  4.Display  5.Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &ch);
+        switch (ch) {
+        case 1:
+            printf("Enter file name: ");
+            scanf("%s", dir[n].fname);
+            n++;
+            break;
+        case 2:
+            printf("Enter file name to delete: ");
+            scanf("%s", f);
+            for (int i = 0; i < n; i++)
+                if (strcmp(dir[i].fname, f) == 0) {
+                    strcpy(dir[i].fname, dir[n-1].fname);
+                    n--;
+                    printf("File deleted.\n");
+                    break;
+                }
+            break;
+        case 3:
+            printf("Enter file name to search: ");
+            scanf("%s", f);
+            for (int i = 0; i < n; i++)
+                if (strcmp(dir[i].fname, f) == 0)
+                    printf("File found.\n");
+            break;
+        case 4:
+            printf("\nFiles:\n");
+            for (int i = 0; i < n; i++)
+                printf("%s\n", dir[i].fname);
+            break;
+        }
+    } while (ch != 5);
+    return 0;
+}
