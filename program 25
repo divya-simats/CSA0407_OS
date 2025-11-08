@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(){
+    int ch; char name[100];
+    while(1){
+        printf("\n1.Create/Write 2.Read 3.Delete 4.Exit\nChoice: ");
+        scanf("%d",&ch);
+        if(ch==1){
+            printf("File name: "); scanf("%s",name);
+            FILE *f = fopen(name,"w");
+            if(!f){ perror("fopen"); continue; }
+            getchar();
+            char line[256];
+            printf("Enter text (single line): ");
+            fgets(line, sizeof(line), stdin);
+            fprintf(f, "%s", line);
+            fclose(f);
+        } else if(ch==2){
+            printf("File name: "); scanf("%s",name);
+            FILE *f = fopen(name,"r");
+            if(!f){ perror("fopen"); continue; }
+            char c;
+            while((c=fgetc(f))!=EOF) putchar(c);
+            fclose(f);
+        } else if(ch==3){
+            printf("File name: "); scanf("%s",name);
+            if(remove(name)==0) printf("Deleted\n"); else perror("remove");
+        } else break;
+        }
+    return 0;
+}
