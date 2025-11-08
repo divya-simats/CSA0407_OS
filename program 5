@@ -1,0 +1,15 @@
+#include <stdio.h>
+#include <limits.h>
+int main(){
+    int n; printf("n: "); scanf("%d",&n);
+    int bt[n], pr[n], done[n];
+    for(int i=0;i<n;i++){ printf("P%d BT & PR: ", i+1); scanf("%d %d",&bt[i],&pr[i]); done[i]=0; }
+    int t=0, comp=0, wt[n], tat[n];
+    while(comp<n){
+        int idx=-1, best=INT_MAX;
+        for(int i=0;i<n;i++) if(!done[i] && pr[i]<best){ best=pr[i]; idx=i; }
+        done[idx]=1; wt[idx]=t; t+=bt[idx]; tat[idx]=t; comp++;
+    }
+    puts("PID BT PR WT TAT");
+    for(int i=0;i<n;i++) printf("P%d %d %d %d %d\n",i+1,bt[i],pr[i],wt[i],tat[i]);
+}
