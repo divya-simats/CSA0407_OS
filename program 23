@@ -1,0 +1,21 @@
+#include <stdio.h>
+#include <limits.h>
+
+int main(){
+    int p; printf("No. partitions: "); scanf("%d",&p);
+    int part[p]; for(int i=0;i<p;i++){ printf("Part[%d]: ",i); scanf("%d",&part[i]); }
+    int n; printf("No. processes: "); scanf("%d",&n);
+    int req[n]; for(int i=0;i<n;i++){ printf("Req[%d]: ",i); scanf("%d",&req[i]); }
+
+    int alloc[n]; for(int i=0;i<n;i++) alloc[i] = -1;
+    for(int i=0;i<n;i++){
+        int idx = -1, best = INT_MAX;
+        for(int j=0;j<p;j++){
+            if(part[j] >= req[i] && part[j] < best){ best = part[j]; idx = j; }
+        }
+        if(idx != -1){ alloc[i] = idx; part[idx] -= req[i]; }
+    }
+    printf("Process\tSize\tPartition\n");
+    for(int i=0;i<n;i++) printf("P%d\t%d\t%d\n", i+1, req[i], alloc[i]);
+    return 0;
+}
