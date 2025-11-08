@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <limits.h>
+
+void allocate(int part[], int p, int req[], int r, int mode){
+    // mode: 0-first,1-best,2-worst
+    int alloc[r]; for(int i=0;i<r;i++) alloc[i]=-1;
+    for(int i=0;i<r;i++){
+        int idx=-1;
+        if(mode==0){
+            for(int j=0;j<p;j++) if(part[j]>=req[i]){ idx=j; break; }
+        } else if(mode==1){
+            int best=INT_MAX;
+            for(int j=0;j<p;j++) if(part[j]>=req[i] && part[j]<best){ best=part[j]; idx=j; }
+        } else {
+            int worst=-1;
+            for(int j=0;j<p;j++) if(part[j]>=req[i] && part[j]>worst){ worst=part[j]; idx=j; }
+        }
+        if(idx!=-1){ alloc[i]=idx; part[idx]-=req[i]; }
+    }
+    for(int i=0;i<r;i++) printf("Req %d -> Part %d\n", req[i], alloc[i]);
+}
+
+int main(){
+    int p; printf("No. partitions: "); scanf("%d",&p);
+    int part[p]; for(int i=0;i<p;i++) scanf("%d",&part[i]);
+    int r; printf("No. req: "); scanf("%d",&r);
+    int
